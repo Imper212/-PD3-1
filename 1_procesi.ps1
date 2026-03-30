@@ -1,3 +1,4 @@
-$b = Get-Process | Where-Object { $_.ProcessName -notmatch "svchost" } | Sort-Object -Property CPU -Descending | Select-Object -First 5
-Write-Host 
-    $b | Format-Table Name, CPU -AutoSize
+$a = Get-Process | Where-Object { $_.ProcessName -notmatch "svchost" } | Sort WorkingSet -Descending | Select-Object -First 5
+$b = ($a | Measure WorkingSet -Sum).Sum / 1MB
+
+Write-Output "5 ram processes:$a MB"
