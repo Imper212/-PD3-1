@@ -1,4 +1,4 @@
-New-Item -Path . -Name "Errors_2.txt" -ItemType "File" 
-$a = (Get-Date).Date
-$b = $a.AddDays(7 - $a.DayOfWeek)
-Get-EventLog -LogName System -EntryType Error -After $b | Add-content -path "Errors_2.txt"
+%b = "$env:USERPROFILE\Documents\Errors.txt"
+
+$a = Get-WinEvent -LogName System | Where {$_.LevelDisplayName -eq "Error" -and TimeCreated -gt (Get-Date).AddDays(-7)}
+if($a.Count -gt 10){"[KRITISKI] Sistēma ir nestabila!" | Out-File $b} else{"[OK] Kļūdu līmenis normāls."| Out-File $b}
