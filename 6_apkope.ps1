@@ -1,1 +1,2 @@
 
+$a = Get-PSDrive C
